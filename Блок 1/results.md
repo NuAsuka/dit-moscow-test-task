@@ -114,3 +114,105 @@ inner join song_genres sg using(song_id)
 inner join genres g using(genre_id)
 group by ll.region, g.name 
 ```
+|genre|region|total_listens|
+|-----|------|-------------|
+|Alternative|Kazan|149|
+|Electronic|Kazan|114|
+|Funk|Kazan|130|
+|Hip-Hop|Kazan|221|
+|Indie|Kazan|125|
+|Jazz|Kazan|212|
+|Pop|Kazan|132|
+|R&B|Kazan|123|
+|Rock|Kazan|198|
+|Soul|Kazan|130|
+|Alternative|Krasnoyarsk|147|
+|Electronic|Krasnoyarsk|124|
+|Funk|Krasnoyarsk|131|
+|Hip-Hop|Krasnoyarsk|215|
+|Indie|Krasnoyarsk|107|
+|Jazz|Krasnoyarsk|190|
+|Pop|Krasnoyarsk|146|
+|R&B|Krasnoyarsk|142|
+|Rock|Krasnoyarsk|244|
+|Soul|Krasnoyarsk|144|
+|Alternative|Moscow|125|
+|Electronic|Moscow|114|
+|Funk|Moscow|122|
+|Hip-Hop|Moscow|200|
+|Indie|Moscow|131|
+|Jazz|Moscow|187|
+|Pop|Moscow|139|
+|R&B|Moscow|124|
+|Rock|Moscow|236|
+|Soul|Moscow|126|
+|Alternative|Nizhny Novgorod|147|
+|Electronic|Nizhny Novgorod|119|
+|Funk|Nizhny Novgorod|134|
+|Hip-Hop|Nizhny Novgorod|223|
+|Indie|Nizhny Novgorod|117|
+|Jazz|Nizhny Novgorod|219|
+|Pop|Nizhny Novgorod|167|
+|R&B|Nizhny Novgorod|143|
+|Rock|Nizhny Novgorod|207|
+|Soul|Nizhny Novgorod|134|
+|Alternative|Novosibirsk|139|
+|Electronic|Novosibirsk|112|
+|Funk|Novosibirsk|122|
+|Hip-Hop|Novosibirsk|231|
+|Indie|Novosibirsk|125|
+|Jazz|Novosibirsk|214|
+|Pop|Novosibirsk|131|
+|R&B|Novosibirsk|109|
+|Rock|Novosibirsk|215|
+|Soul|Novosibirsk|137|
+|Alternative|Saint Petersburg|148|
+|Electronic|Saint Petersburg|106|
+|Funk|Saint Petersburg|121|
+|Hip-Hop|Saint Petersburg|203|
+|Indie|Saint Petersburg|104|
+|Jazz|Saint Petersburg|190|
+|Pop|Saint Petersburg|138|
+|R&B|Saint Petersburg|117|
+|Rock|Saint Petersburg|209|
+|Soul|Saint Petersburg|126|
+|Alternative|Samara|122|
+|Electronic|Samara|121|
+|Funk|Samara|100|
+|Hip-Hop|Samara|200|
+|Indie|Samara|104|
+|Jazz|Samara|205|
+|Pop|Samara|143|
+|R&B|Samara|140|
+|Rock|Samara|208|
+|Soul|Samara|146|
+|Alternative|Sochi|122|
+|Electronic|Sochi|108|
+|Funk|Sochi|115|
+|Hip-Hop|Sochi|231|
+|Indie|Sochi|131|
+|Jazz|Sochi|185|
+|Pop|Sochi|154|
+|R&B|Sochi|129|
+|Rock|Sochi|236|
+|Soul|Sochi|137|
+|Alternative|Vladivostok|122|
+|Electronic|Vladivostok|93|
+|Funk|Vladivostok|105|
+|Hip-Hop|Vladivostok|195|
+|Indie|Vladivostok|107|
+|Jazz|Vladivostok|181|
+|Pop|Vladivostok|128|
+|R&B|Vladivostok|122|
+|Rock|Vladivostok|202|
+|Soul|Vladivostok|129|
+|Alternative|Yekaterinburg|133|
+|Electronic|Yekaterinburg|125|
+|Funk|Yekaterinburg|119|
+|Hip-Hop|Yekaterinburg|240|
+|Indie|Yekaterinburg|118|
+|Jazz|Yekaterinburg|211|
+|Pop|Yekaterinburg|143|
+|R&B|Yekaterinburg|127|
+|Rock|Yekaterinburg|201|
+|Soul|Yekaterinburg|133|
