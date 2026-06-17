@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 from pathlib import Path
-import pandera as pa
-import pandas as pd
+import pandera.pandas as pa
 from pandera.typing import Series
 from dataclasses import dataclass
 import phonenumbers
@@ -14,8 +13,8 @@ class CustomerSchema(pa.DataFrameModel):
     full_name: Series[str] = pa.Field(coerce=True, nullable=False)
     email: Series[str] = pa.Field(coerce=True, nullable=True)
     phone: Series[str] = pa.Field(coerce=True, nullable=True)
-    city: Series[str] = pa.Field(coerce=True, nullable=False)
-    created_at: Series[pd.Timestamp] = pa.Field(coerce=True, nullable=False)
+    city: Series[str] = pa.Field(coerce=True, nullable=True)
+    created_at: Series[pd.Timestamp] = pa.Field(coerce=True, nullable=True)
 
     @pa.check("full_name")
     def check_full_name_length(cls, series: Series[str]) -> Series[bool]:
@@ -44,9 +43,8 @@ class EventsSchema(pa.DataFrameModel):
     
     customer_id: Series[int] = pa.Field(
         coerce=True, 
-        nullable=True, 
+        nullable=False, 
         ge=1,
-        description="ID клиента (может быть null для анонимных пользователей)"
     )
     
     event_type: Series[str] = pa.Field(
@@ -71,7 +69,8 @@ class EventsSchema(pa.DataFrameModel):
 
     @pa.check("event_timestamp")
     def check_timestamp_not_in_future(cls, series: Series[pd.Timestamp]) -> Series[bool]:
-        return series <= pd.Timestamp.now() + pd.Timedelta(days=1)
+    # Добавляем na=True, чтобы NaT не ломал сравнение
+        return series.le(pd.Timestamp.now() + pd.Timedelta(days=1), fill_value=True)
     
 class OrdersSchema(pa.DataFrameModel):
     order_id: Series[int] = pa.Field(
@@ -84,7 +83,7 @@ class OrdersSchema(pa.DataFrameModel):
     
     customer_id: Series[int] = pa.Field(
         coerce=True, 
-        nullable=True,  # Допускаем null, если возможны гостевые заказы
+        nullable=False, 
         ge=1,
         description="ID клиента"
     )
@@ -133,13 +132,11 @@ class OrdersSchema(pa.DataFrameModel):
 
     @pa.check("order_timestamp")
     def check_timestamp_not_in_future(cls, series: Series[pd.Timestamp]) -> Series[bool]:
-        """Заказ не может быть создан в будущем (с допуском в 1 день на часовые пояса)"""
-        return series <= pd.Timestamp.now() + pd.Timedelta(days=1)
+        return series.le(pd.Timestamp.now() + pd.Timedelta(days=1), fill_value=True)
 
     @pa.check("order_timestamp")
     def check_timestamp_not_too_old(cls, series: Series[pd.Timestamp]) -> Series[bool]:
-        """Защита от аномально старых дат (например, 1970 год из-за ошибок парсинга)"""
-        return series >= pd.Timestamp("2020-01-01")
+        return series.ge(pd.Timestamp("2020-01-01"), fill_value=True)
     
 class PaymentsSchema(pa.DataFrameModel):
     payment_id: Series[int] = pa.Field(
@@ -189,17 +186,11 @@ class PaymentsSchema(pa.DataFrameModel):
 
     @pa.check("payment_timestamp")
     def check_timestamp_not_absurd_future(cls, series: Series[pd.Timestamp]) -> Series[bool]:
-        """
-        Защита от некорректных дат в будущем. 
-        Допускаем максимум +1 год (например, для предзаказов), 
-        но это отловит ошибки вроде '2099-01-01' или сдвиги эпохи.
-        """
-        return series <= pd.Timestamp.now() + pd.Timedelta(days=365)
+        return series.le(pd.Timestamp.now() + pd.Timedelta(days=365), fill_value=True)
 
     @pa.check("payment_timestamp")
     def check_timestamp_not_too_old(cls, series: Series[pd.Timestamp]) -> Series[bool]:
-        """Защита от дат до эпохи интернет-платежей (ошибки парсинга в 1970 год)"""
-        return series >= pd.Timestamp("2010-01-01")
+        return series.ge(pd.Timestamp("2010-01-01"), fill_value=True)
 
 class ProductsSchema(pa.DataFrameModel):
     product_id: Series[int] = pa.Field(

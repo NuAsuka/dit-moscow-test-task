@@ -50,7 +50,7 @@ def standardize_city_systematic(city_series):
         .astype(str)
         .str.strip()
         .str.lower()
-        .str.replace(r'^(п\.|ст\.|г\.|д\.|с\.|клх\.?|поселок|город|станция|деревня|село)\s*', '', regex=True)
+        .str.replace(r'^(п\.|ст\.|г\.|д\.|с\.|клх\.?|поселок|город|станция|деревня|село|к\.)\s*|\s*\([^)]*\)', '', regex=True)
         .str.strip()
         .str.title()
     )
@@ -87,3 +87,4 @@ def standardize_email_systematic(email_series):
         .replace(['unknown', 'nan', 'null', ''], np.nan)
         .where(lambda x: x.str.match(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', na=False))
     )
+
